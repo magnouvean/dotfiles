@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+
+import subprocess
+import sys
+
+flatpaks_to_install = set(
+    [
+        "com.bitwarden.desktop",
+        "com.brave.Browser",
+        "com.github.neithern.g4music",
+        "org.gtk.Gtk3theme.Adwaita-dark",
+    ]
+)
+flatpaks_installed_str = subprocess.run(
+    ["flatpak", "--user", "list", "--app", "--columns=application"],
+    capture_output=True,
+    text=True,
+).stdout.strip()
+flatpaks_installed = set(flatpaks_installed_str.split())
+
+for flatpak in flatpaks_installed - flatpaks_to_install:
+    subprocess.run(["flatpak", "--user", "-y", "uninstall", flatpak])
+
+for flatpak in flatpaks_to_install - flatpaks_installed:
+    subprocess.run(["flatpak", "--user", "-y", "install", flatpak])

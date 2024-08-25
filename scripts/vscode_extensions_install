@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+
+import subprocess
+import sys
+
+exts_to_install = set(
+    [
+        "codeium.codeium",
+        "github.github-vscode-theme",
+        "ms-vscode-remote.remote-containers",
+        "ms-vscode-remote.remote-ssh",
+        "streetsidesoftware.code-spell-checker",
+        "vscodevim.vim",
+    ]
+)
+exts_installed_str = subprocess.run(
+    ["code", "--list-extensions"], capture_output=True, text=True
+).stdout.strip()
+exts_installed = set(exts_installed_str.split())
+
+for ext in exts_installed - exts_to_install:
+    subprocess.run(["code", "--uninstall-extension", ext])
+
+for ext in exts_to_install - exts_installed:
+    subprocess.run(["code", "--install-extension", ext])

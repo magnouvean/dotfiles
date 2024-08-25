@@ -1,0 +1,20 @@
+{
+    "window.titleBarStyle": "custom",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit",
+    },
+    "editor.formatOnSave": true,
+    "editor.lineNumbers": "relative",
+    "vim.useSystemClipboard": true,
+    "workbench.startupEditor": "none",
+    "workbench.colorTheme": "GitHub Dark Default",
+    "editor.fontFamily": "'JetBrains Mono', 'Droid Sans Mono', 'monospace', monospace",
+    "editor.fontLigatures": true,
+    "nix.enableLanguageServer": true,
+    "nix.serverPath": "nixd",
+    "vim.highlightedyank.enable": true,
+    "cSpell.enableFiletypes": [
+        "nix"
+    ],
+    "github.gitAuthentication": false,
+}
