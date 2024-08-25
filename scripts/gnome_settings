@@ -8,13 +8,15 @@ for reset_dir in to_reset:
     subprocess.run(["gsettings", "reset-recursively", reset_dir])
 
 gsettings_keys = {
-    "org.gnome.desktop.interface.icon-theme": "Adwaita",
-    "org.gnome.desktop.interface.gtk-theme": "Adwaita-dark",
+    "org.gnome.desktop.interface.clock-format": "24h",
     "org.gnome.desktop.interface.color-scheme": "prefer-dark",
+    "org.gnome.desktop.interface.cursor-theme": "Adwaita",
+    "org.gnome.desktop.interface.gtk-theme": "Adwaita-dark",
+    "org.gnome.desktop.interface.icon-theme": "Adwaita",
     "org.gnome.shell.enabled-extensions": "['blur-my-shell@aunetx', 'dash-to-dock@micxgx.gmail.com', 'appindicatorsupport@rgcjonas.gmail.com']",
+    "org.gnome.shell.extensions.dash-to-dock.dock-fixed": "false",
     "org.gnome.shell.extensions.dash-to-dock.hot-keys": "false",
-    "org.gnome.shell.extensions.dash-to-dock.dock-fixed": "false",
-    "org.gnome.shell.extensions.dash-to-dock.dock-fixed": "false",
+    "org.gnome.shell.favorite-apps": "['org.gnome.Ptyxis.desktop', 'org.gnome.Nautilus.desktop', 'com.brave.Browser.desktop', 'code.desktop']",
 }
 gsettings_keys.update(
     {

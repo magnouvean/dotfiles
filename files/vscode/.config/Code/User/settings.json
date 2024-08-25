@@ -17,4 +17,5 @@
         "nix"
     ],
     "github.gitAuthentication": false,
+    "dev.containers.dockerPath": "podman",
 }
