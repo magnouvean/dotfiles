@@ -8,6 +8,9 @@ flatpaks_to_install = set(
         "com.bitwarden.desktop",
         "com.brave.Browser",
         "com.github.neithern.g4music",
+        "com.github.rafostar.Clapper",
+        "org.gnome.Boxes",
+        "org.gnome.Papers",
         "org.gtk.Gtk3theme.Adwaita-dark",
     ]
 )
