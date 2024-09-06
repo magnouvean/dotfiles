@@ -9,6 +9,7 @@ flatpaks_to_install = set(
         "com.brave.Browser",
         "com.github.neithern.g4music",
         "com.github.rafostar.Clapper",
+        "com.valvesoftware.Steam",
         "org.gnome.Boxes",
         "org.gnome.Papers",
         "org.gtk.Gtk3theme.Adwaita-dark",
