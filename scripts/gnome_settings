@@ -2,12 +2,14 @@
 
 import subprocess
 
-to_reset = ["org.gnome.shell", "org.gnome.desktop.wm.keybindings"]
+to_reset = ["org.gnome.shell", "org.gnome.desktop.wm.keybindings", "org.gnome.Console"]
 
 for reset_dir in to_reset:
     subprocess.run(["gsettings", "reset-recursively", reset_dir])
 
 gsettings_keys = {
+    "org.gnome.Console.custom-font": "'JetBrains Mono'",
+    "org.gnome.Console.use-system-font": "false",
     "org.gnome.desktop.background.picture-uri": "file:///usr/share/backgrounds/fedora-workstation/mermaid_dark.webp",
     "org.gnome.desktop.background.picture-uri-dark": "file:///usr/share/backgrounds/fedora-workstation/mermaid_dark.webp",
     "org.gnome.desktop.interface.clock-format": "24h",
