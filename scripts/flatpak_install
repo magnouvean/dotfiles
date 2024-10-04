@@ -10,9 +10,11 @@ flatpaks_to_install = set(
         "com.github.neithern.g4music",
         "com.github.rafostar.Clapper",
         "com.valvesoftware.Steam",
+        "net.opentabletdriver.OpenTabletDriver",
         "org.gnome.Boxes",
         "org.gnome.Papers",
         "org.gtk.Gtk3theme.Adwaita-dark",
+        "sh.ppy.osu",
     ]
 )
 flatpaks_installed_str = subprocess.run(

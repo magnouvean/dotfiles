@@ -18,4 +18,5 @@
     ],
     "github.gitAuthentication": false,
     "dev.containers.dockerPath": "podman",
+    "extensions.ignoreRecommendations": true,
 }

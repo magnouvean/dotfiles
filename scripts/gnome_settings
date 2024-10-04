@@ -44,3 +44,5 @@ gsettings_keys.update(
 for key, value in gsettings_keys.items():
     cmd = ["gsettings", "set"] + key.rsplit(".", 1) + [value]
     subprocess.run(cmd)
+
+subprocess.run(["xdg-settings", "set", "default-web-browser", "com.brave.Browser.desktop"])
