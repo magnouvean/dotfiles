@@ -5,7 +5,7 @@ import sys
 
 exts_to_install = set(
     [
-        "codeium.codeium",
+        "continue.continue",
         "github.github-vscode-theme",
         "ms-azuretools.vscode-docker",
         "ms-vscode-remote.remote-containers",

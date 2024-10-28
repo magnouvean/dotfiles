@@ -1,4 +1,4 @@
-default: services hostname flatpak vscode gnome dotfiles
+default: hostname flatpak brew vscode gnome dotfiles services
 
 services:
     systemctl --user enable syncthing
@@ -24,3 +24,6 @@ dotfiles:
     if [ -f $HOME/.config/Code/User/settings.json ]; then rm $HOME/.config/Code/User/settings.json; fi
     stow -d files vscode -t $HOME
     stow -d files zsh -t $HOME
+
+brew:
+    ./scripts/brew_install
