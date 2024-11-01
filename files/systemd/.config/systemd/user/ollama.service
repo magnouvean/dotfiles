@@ -1,0 +1,10 @@
+[Unit]
+Description=Ollama User Service
+After=network.target
+
+[Service]
+ExecStart=/home/linuxbrew/.linuxbrew/bin/ollama serve
+Restart=always
+
+[Install]
+WantedBy=default.target

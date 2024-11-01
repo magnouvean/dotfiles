@@ -3,6 +3,8 @@ default: hostname flatpak brew vscode gnome dotfiles services
 services:
     systemctl --user enable syncthing
     systemctl --user start syncthing
+    systemctl --user enable ollama
+    systemctl --user start ollama
 
 hostname-suffix := `hostnamectl chassis`
 
@@ -22,8 +24,10 @@ gnome:
 dotfiles:
     if [ -f $HOME/.zshrc ]; then rm $HOME/.zshrc; fi
     if [ -f $HOME/.config/Code/User/settings.json ]; then rm $HOME/.config/Code/User/settings.json; fi
+    if [ -f $HOME/.continue/config.json ]; then rm $HOME/.continue/config.json; fi
     stow -d files vscode -t $HOME
     stow -d files zsh -t $HOME
+    stow -d files systemd -t $HOME
 
 brew:
     ./scripts/brew_install
