@@ -4,9 +4,10 @@ import subprocess
 import sys
 
 packages_to_install = set(
-    [
-        "ollama",
-    ]
+    []
+)
+casks_to_install = set(
+    []
 )
 packages_installed_str = subprocess.run(
     ["brew", "list"],
@@ -15,8 +16,11 @@ packages_installed_str = subprocess.run(
 ).stdout.strip()
 packages_installed = set(packages_installed_str.split())
 
-for package in packages_installed - packages_to_install:
+for package in packages_installed - packages_to_install - casks_to_install:
     subprocess.run(["brew", "uninstall", package])
 
 for package in packages_to_install - packages_installed:
     subprocess.run(["brew", "install", package])
+
+for package in casks_to_install - packages_installed:
+    subprocess.run(["brew", "install", "--cask", package])
