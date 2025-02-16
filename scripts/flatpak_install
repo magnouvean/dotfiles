@@ -11,8 +11,11 @@ flatpaks_to_install = set(
         "com.github.rafostar.Clapper",
         "com.jeffser.Alpaca",
         "com.valvesoftware.Steam",
+        "io.missioncenter.MissionCenter",
         "net.opentabletdriver.OpenTabletDriver",
+        "org.freedesktop.Platform.VulkanLayer.MangoHud/x86_64/24.08",
         "org.gnome.Boxes",
+        "org.gnome.Loupe",
         "org.gnome.Papers",
         "org.gtk.Gtk3theme.Adwaita-dark",
         "sh.ppy.osu",
@@ -30,3 +33,10 @@ for flatpak in flatpaks_installed - flatpaks_to_install:
 
 for flatpak in flatpaks_to_install - flatpaks_installed:
     subprocess.run(["flatpak", "--user", "-y", "install", flatpak])
+
+overrides = [
+    ("com.valvesoftware.Steam", "--filesystem=/mnt/games")
+]
+for override_package, override_arg in overrides:
+    print("Overriding", override_package, override_arg)
+    subprocess.run(["flatpak", "override", "--user", override_package, override_arg])
