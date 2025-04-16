@@ -35,4 +35,6 @@ alias gad="git add"
 alias gco="git commit"
 alias gpu="git push"
 alias gst="git status"
-alias ollama='OLLAMA_MODELS=~/.var/app/com.jeffser.Alpaca/data/.ollama/models flatpak run --command=ollama com.jeffser.Alpaca'
+alias ollama="docker exec -it ollama ollama"
+alias ollama-serve="docker run --rm -it --gpus all -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama"
+alias ollama-update="docker pull ollama/ollama"

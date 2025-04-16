@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import subprocess
-import sys
 
 flatpaks_to_install = set(
     [
@@ -9,15 +8,18 @@ flatpaks_to_install = set(
         "com.brave.Browser",
         "com.github.neithern.g4music",
         "com.github.rafostar.Clapper",
-        "com.jeffser.Alpaca",
+        "com.github.tchx84.Flatseal",
         "com.valvesoftware.Steam",
         "io.missioncenter.MissionCenter",
         "net.opentabletdriver.OpenTabletDriver",
+        "org.freedesktop.Platform.VulkanLayer.MangoHud/x86_64/23.08",
         "org.freedesktop.Platform.VulkanLayer.MangoHud/x86_64/24.08",
         "org.gnome.Boxes",
         "org.gnome.Loupe",
         "org.gnome.Papers",
+        "org.godotengine.GodotSharp",
         "org.gtk.Gtk3theme.Adwaita-dark",
+        "org.onlyoffice.desktopeditors",
         "sh.ppy.osu",
     ]
 )
@@ -27,6 +29,8 @@ flatpaks_installed_str = subprocess.run(
     text=True,
 ).stdout.strip()
 flatpaks_installed = set(flatpaks_installed_str.split())
+
+subprocess.run(["flatpak", "--user", "-y", "update"])
 
 for flatpak in flatpaks_installed - flatpaks_to_install:
     subprocess.run(["flatpak", "--user", "-y", "uninstall", flatpak])
