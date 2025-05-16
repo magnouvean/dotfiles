@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import subprocess
-
 flatpaks_to_install = set(
     [
         "com.bitwarden.desktop",
@@ -10,6 +9,7 @@ flatpaks_to_install = set(
         "com.github.rafostar.Clapper",
         "com.github.tchx84.Flatseal",
         "com.valvesoftware.Steam",
+        "dev.zed.Zed",
         "io.missioncenter.MissionCenter",
         "net.opentabletdriver.OpenTabletDriver",
         "org.freedesktop.Platform.VulkanLayer.MangoHud/x86_64/23.08",
@@ -17,6 +17,7 @@ flatpaks_to_install = set(
         "org.gnome.Boxes",
         "org.gnome.Loupe",
         "org.gnome.Papers",
+        "org.gnome.TextEditor",
         "org.godotengine.GodotSharp",
         "org.gtk.Gtk3theme.Adwaita-dark",
         "org.onlyoffice.desktopeditors",

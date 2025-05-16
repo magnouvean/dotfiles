@@ -7,6 +7,8 @@ sync: hostname flatpak brew vscode gnome dotfiles services groups
 services:
     systemctl --user enable syncthing
     systemctl --user start syncthing
+    systemctl --user enable ollama
+    systemctl --user start ollama
 
 [private]
 hostname-suffix := `hostnamectl chassis`
@@ -42,6 +44,9 @@ dotfiles:
     if [ -f $HOME/.config/containers/containers.conf ]; then rm $HOME/.config/containers/containers.conf; fi
     stow -d files vscode -t $HOME
     stow -d files podman -t $HOME
+    if [ -d $HOME/.config/systemd/user ]; then rm -rf $HOME/.config/systemd/user; fi
+    mkdir -p $HOME/.config/systemd
+    cp -r files/systemd/.config/systemd/user $HOME/.config/systemd/user
 
     cp files/zsh/.zshrc $HOME/.zshrc
     printf "\nalias ujust=\"just -f {{justfile()}}\"" >> $HOME/.zshrc
@@ -51,5 +56,5 @@ brew:
     {{justfile_directory()}}/scripts/brew_install
 
 devcontainer name:
-    mkdir -p {{invocation_directory()}}/.devcontainers/
-    cp {{justfile_directory()}}/files/devcontainers/{{name}}.json {{invocation_directory()}}/.devcontainers/devcontainer.json
+    mkdir -p {{invocation_directory()}}/.devcontainer/
+    cp {{justfile_directory()}}/files/devcontainers/{{name}}.json {{invocation_directory()}}/.devcontainer/devcontainer.json
