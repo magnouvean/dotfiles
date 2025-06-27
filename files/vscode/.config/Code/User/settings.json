@@ -24,4 +24,6 @@
             ],
         }
     ],
+    "dev.containers.dockerPath": "podman",
+    "dev.containers.dockerComposePath": "podman-compose",
 }

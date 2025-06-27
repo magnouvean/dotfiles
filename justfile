@@ -55,6 +55,11 @@ dotfiles:
 brew:
     {{justfile_directory()}}/scripts/brew_install
 
+[private]
+podman-pull:
+    podman pull ollama/ollama:latest
+    podman image prune
+
 devcontainer name:
     mkdir -p {{invocation_directory()}}/.devcontainer/
     cp {{justfile_directory()}}/files/devcontainers/{{name}}.json {{invocation_directory()}}/.devcontainer/devcontainer.json

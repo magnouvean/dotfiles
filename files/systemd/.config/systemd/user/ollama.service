@@ -2,7 +2,7 @@
 Description=Run ollama in the background
 
 [Service]
-ExecStart=/usr/bin/docker run --rm --gpus all -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+ExecStart=/usr/bin/podman run --rm --gpus all --security-opt label=disable --replace -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
 
 [Install]
 WantedBy=default.target
