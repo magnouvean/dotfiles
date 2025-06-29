@@ -1,0 +1,15 @@
+{
+    "name": "Pytorch",
+    "image": "pytorch/pytorch:2.7.0-cuda12.8-cudnn9-runtime",
+    "runArgs": [
+        "--gpus=all"
+    ],
+    "remoteUser": "root",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python"
+            ]
+        }
+    }
+}

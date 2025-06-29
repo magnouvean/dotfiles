@@ -62,4 +62,4 @@ podman-pull:
 
 devcontainer name:
     mkdir -p {{invocation_directory()}}/.devcontainer/
-    cp {{justfile_directory()}}/files/devcontainers/{{name}}.json {{invocation_directory()}}/.devcontainer/devcontainer.json
+    cp {{justfile_directory()}}/files/devcontainers/{{name}}/* {{invocation_directory()}}/.devcontainer/
