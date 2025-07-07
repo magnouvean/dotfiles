@@ -1,0 +1,18 @@
+FROM pytorch/pytorch:2.7.1-cuda12.8-cudnn9-runtime
+
+RUN pip install python-lsp-server[black]
+
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y \
+    openssh-server \
+    sudo \
+    && rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /var/run/sshd
+RUN echo 'root:password' | chpasswd
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN printf "alias python='/opt/conda/bin/python3'\nalias python3='/opt/conda/bin/python3'" > ~/.bash_aliases
+EXPOSE 22
+
+WORKDIR /workspace
+
+ENTRYPOINT [ "/bin/bash" ]

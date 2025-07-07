@@ -1,0 +1,36 @@
+{
+  "lsp": {
+    "omnisharp": {
+      "binary": {
+        "path": "/omnisharp/OmniSharp",
+        "arguments": ["optional", "additional", "args", "-lsp"]
+      }
+    }
+  },
+  "vim_mode": true,
+  "relative_line_numbers": true,
+  "ui_font_family": "JetBrains Mono",
+  "ui_font_size": 16,
+  "buffer_font_family": "JetBrains Mono",
+  "buffer_font_size": 16,
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "Ayu Dark"
+  },
+  "vim-mode": true,
+  "format_on_save": "on",
+  "auto_install_extensions": {
+    "basher": true,
+    "clojure": true,
+    "csharp": true,
+    "dockerfile": true,
+    "docker-compose": true,
+    "html": true,
+    "ini": true,
+    "pylsp": true,
+    "sql": true,
+    "toml": true,
+    "xml": true
+  }
+}

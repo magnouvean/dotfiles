@@ -1,7 +1,7 @@
 default:
     just -f {{justfile()}} --list
 
-sync: hostname flatpak brew vscode gnome dotfiles services groups
+sync: hostname flatpak brew vscode gnome dotfiles zed-extensions-remove services groups podman-pull
 
 [private]
 services:
@@ -40,13 +40,13 @@ groups:
 dotfiles:
     if [ -f $HOME/.zshrc ]; then rm $HOME/.zshrc; fi
     if [ -f $HOME/.config/Code/User/settings.json ]; then rm $HOME/.config/Code/User/settings.json; fi
-    if [ -f $HOME/.continue/config.json ]; then rm $HOME/.continue/config.json; fi
-    if [ -f $HOME/.config/containers/containers.conf ]; then rm $HOME/.config/containers/containers.conf; fi
     stow -d files vscode -t $HOME
-    stow -d files podman -t $HOME
     if [ -d $HOME/.config/systemd/user ]; then rm -rf $HOME/.config/systemd/user; fi
     mkdir -p $HOME/.config/systemd
     cp -r files/systemd/.config/systemd/user $HOME/.config/systemd/user
+    if [ -f $HOME/.var/app/dev.zed.Zed/config/zed/settings.json ]; then rm $HOME/.var/app/dev.zed.Zed/config/zed/settings.json; fi
+    mkdir -p $HOME/.var/app/dev.zed.Zed/config/zed
+    stow -d files zed -t $HOME/.var/app/dev.zed.Zed/config/zed
 
     cp files/zsh/.zshrc $HOME/.zshrc
     printf "\nalias ujust=\"just -f {{justfile()}}\"" >> $HOME/.zshrc
@@ -60,6 +60,28 @@ podman-pull:
     podman pull ollama/ollama:latest
     podman image prune
 
-devcontainer name:
-    mkdir -p {{invocation_directory()}}/.devcontainer/
-    cp {{justfile_directory()}}/files/devcontainers/{{name}}/* {{invocation_directory()}}/.devcontainer/
+[private]
+zed-extensions-remove:
+    #!/usr/bin/env python
+    import json
+    import os
+    import shutil
+
+    with open("{{justfile_directory()}}/files/zed/settings.json", "r") as file:
+        zed_config = json.load(file)
+    extensions = zed_config["auto_install_extensions"].keys()
+    installed_extensions_dir = os.path.expanduser(f"~/.var/app/dev.zed.Zed/data/zed/extensions/installed")
+    for installed_extension in os.listdir(installed_extensions_dir):
+        if installed_extension not in extensions:
+            print(extensions, installed_extension, installed_extension in extensions)
+            print(f"Removing zed extension: {installed_extension}")
+            shutil.rmtree(f"{installed_extensions_dir}/{installed_extension}")
+
+devcontainer name port:
+    #!/bin/bash
+    export CONTAINER_ID="{{name}}_$(echo {{invocation_directory()}} | md5sum | cut -c1-8)"
+    extra_args=$(envsubst < {{justfile_directory()}}/devcontainers/{{name}}/extra_args)
+    podman build {{justfile_directory()}}/devcontainers/{{name}} -t $CONTAINER_ID
+    echo "podman run -it --gpus=all --security-opt label=disable -d --replace -p {{port}}:22 -v zed-server:/root/.zed_server -v "{{invocation_directory()}}:/workspace" --name $CONTAINER_ID $CONTAINER_ID $extra_args"
+    podman run -it --gpus=all --security-opt label=disable -d --replace -p {{port}}:22 -v zed-server:/root/.zed_server -v "{{invocation_directory()}}:/workspace"  $extra_args --name $CONTAINER_ID $CONTAINER_ID
+    podman exec $CONTAINER_ID service ssh start
