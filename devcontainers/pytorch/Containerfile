@@ -10,7 +10,8 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir -p /var/run/sshd
 RUN echo 'root:password' | chpasswd
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-RUN printf "alias python='/opt/conda/bin/python3'\nalias python3='/opt/conda/bin/python3'" > ~/.bash_aliases
+RUN printf "alias python='/opt/conda/bin/python3'\nalias python3='/opt/conda/bin/python3'\nalias pip='/opt/conda/bin/pip3'\nalias pip='/opt/conda/bin/pip'" > ~/.bash_aliases
+RUN /opt/conda/bin/pip install black isort pyright
 EXPOSE 22
 
 WORKDIR /workspace

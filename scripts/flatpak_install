@@ -9,6 +9,7 @@ flatpaks_to_install = set(
         "com.github.rafostar.Clapper",
         "com.github.tchx84.Flatseal",
         "com.valvesoftware.Steam",
+        "com.vscodium.codium",
         "dev.zed.Zed",
         "io.missioncenter.MissionCenter",
         "net.opentabletdriver.OpenTabletDriver",

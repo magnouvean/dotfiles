@@ -1,0 +1,23 @@
+{
+  "window.titleBarStyle": "custom",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "editor.formatOnSave": true,
+  "editor.lineNumbers": "relative",
+  "vim.useSystemClipboard": true,
+  "workbench.startupEditor": "none",
+  "workbench.colorTheme": "Catppuccin Mocha",
+  "workbench.iconTheme": "catppuccin-mocha",
+  "editor.fontFamily": "'JetBrains Mono', 'Droid Sans Mono', 'monospace', monospace",
+  "editor.fontLigatures": true,
+  "vim.highlightedyank.enable": true,
+  "github.gitAuthentication": false,
+  "extensions.ignoreRecommendations": true,
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<C-p>"],
+      "commands": ["workbench.action.quickOpen"]
+    }
+  ]
+}

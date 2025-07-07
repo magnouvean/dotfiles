@@ -1,25 +1,23 @@
 #!/usr/bin/env python
 
 import subprocess
-import sys
 
 exts_to_install = set(
     [
-        "github.github-vscode-theme",
-        "ms-azuretools.vscode-docker",
-        "ms-vscode-remote.remote-containers",
-        "ms-vscode-remote.remote-ssh",
+        "catppuccin.catppuccin-vsc",
+        "catppuccin.catppuccin-vsc-icons",
+        "jeanp413.open-remote-ssh",
         "streetsidesoftware.code-spell-checker",
         "vscodevim.vim",
     ]
 )
 exts_installed_str = subprocess.run(
-    ["code", "--list-extensions"], capture_output=True, text=True
+    ["flatpak", "run", "com.vscodium.codium", "--list-extensions"], capture_output=True, text=True
 ).stdout.strip()
 exts_installed = set(exts_installed_str.split())
 
 for ext in exts_installed - exts_to_install:
-    subprocess.run(["code", "--uninstall-extension", ext])
+    subprocess.run(["flatpak", "run", "com.vscodium.codium", "--uninstall-extension", ext])
 
 for ext in exts_to_install - exts_installed:
-    subprocess.run(["code", "--install-extension", ext])
+    subprocess.run(["flatpak", "run", "com.vscodium.codium", "--install-extension", ext])

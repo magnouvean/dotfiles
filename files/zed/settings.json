@@ -1,4 +1,19 @@
 {
+  "ssh_connections": [
+    {
+      "host": "127.0.0.1",
+      "username": "root",
+      "port": 2223,
+      "projects": [
+        {
+          "paths": [
+            "/workspace"
+          ]
+        }
+      ]
+    }
+  ],
+  "icon_theme": "Catppuccin Mocha",
   "lsp": {
     "omnisharp": {
       "binary": {
@@ -15,20 +30,21 @@
   "buffer_font_size": 16,
   "theme": {
     "mode": "system",
-    "light": "One Light",
-    "dark": "Ayu Dark"
+    "light": "Catppuccin Latte (Blur)",
+    "dark": "Catppuccin Espresso (Blur)"
   },
   "vim-mode": true,
   "format_on_save": "on",
   "auto_install_extensions": {
     "basher": true,
+    "catppuccin-blur": true,
+    "catppuccin-icons": true,
     "clojure": true,
     "csharp": true,
     "dockerfile": true,
     "docker-compose": true,
     "html": true,
     "ini": true,
-    "pylsp": true,
     "sql": true,
     "toml": true,
     "xml": true

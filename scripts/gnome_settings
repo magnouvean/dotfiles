@@ -20,7 +20,7 @@ gsettings_keys = {
     "org.gnome.shell.enabled-extensions": "['dash-to-dock@micxgx.gmail.com', 'appindicatorsupport@rgcjonas.gmail.com', 'caffeine@patapon.info']",
     "org.gnome.shell.extensions.dash-to-dock.dock-fixed": "false",
     "org.gnome.shell.extensions.dash-to-dock.hot-keys": "false",
-    "org.gnome.shell.favorite-apps": "['org.gnome.Console.desktop', 'org.gnome.Nautilus.desktop', 'com.brave.Browser.desktop', 'code.desktop', 'dev.zed.Zed.desktop']",
+    "org.gnome.shell.favorite-apps": "['org.gnome.Console.desktop', 'org.gnome.Nautilus.desktop', 'com.brave.Browser.desktop', 'com.vscodium.codium.desktop', 'dev.zed.Zed.desktop']",
 }
 gsettings_keys.update(
     {

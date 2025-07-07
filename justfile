@@ -1,7 +1,7 @@
 default:
     just -f {{justfile()}} --list
 
-sync: hostname flatpak brew vscode gnome dotfiles zed-extensions-remove services groups podman-pull
+sync: hostname flatpak vscode gnome dotfiles zed-extensions-remove services groups
 
 [private]
 services:
@@ -38,27 +38,25 @@ groups:
 
 [private]
 dotfiles:
-    if [ -f $HOME/.zshrc ]; then rm $HOME/.zshrc; fi
-    if [ -f $HOME/.config/Code/User/settings.json ]; then rm $HOME/.config/Code/User/settings.json; fi
-    stow -d files vscode -t $HOME
+    # VSCodium
+    if [ -f $HOME/.var/app/com.vscodium.codium/config/VSCodium/User/settings.json ]; then rm $HOME/.var/app/com.vscodium.codium/config/VSCodium/User/settings.json; fi
+    mkdir -p $HOME/.var/app/com.vscodium.codium/config/VSCodium/User
+    ln -s {{justfile_directory()}}/files/vscodium/settings.json $HOME/.var/app/com.vscodium.codium/config/VSCodium/User/settings.json
+
+    # Systemd
     if [ -d $HOME/.config/systemd/user ]; then rm -rf $HOME/.config/systemd/user; fi
-    mkdir -p $HOME/.config/systemd
-    cp -r files/systemd/.config/systemd/user $HOME/.config/systemd/user
+    mkdir -p $HOME/.config/systemd/user
+    cp {{justfile_directory()}}/files/systemd/ollama.service $HOME/.config/systemd/user/ollama.service
+
+    # Zed
     if [ -f $HOME/.var/app/dev.zed.Zed/config/zed/settings.json ]; then rm $HOME/.var/app/dev.zed.Zed/config/zed/settings.json; fi
     mkdir -p $HOME/.var/app/dev.zed.Zed/config/zed
-    stow -d files zed -t $HOME/.var/app/dev.zed.Zed/config/zed
+    cp {{justfile_directory()}}/files/zed/settings.json $HOME/.var/app/dev.zed.Zed/config/zed/settings.json
 
-    cp files/zsh/.zshrc $HOME/.zshrc
+    # ZSH
+    if [ -f $HOME/.zshrc ]; then rm $HOME/.zshrc; fi
+    cp {{justfile_directory()}}/files/zsh/.zshrc $HOME/.zshrc
     printf "\nalias ujust=\"just -f {{justfile()}}\"" >> $HOME/.zshrc
-
-[private]
-brew:
-    {{justfile_directory()}}/scripts/brew_install
-
-[private]
-podman-pull:
-    podman pull ollama/ollama:latest
-    podman image prune
 
 [private]
 zed-extensions-remove:
@@ -83,5 +81,9 @@ devcontainer name port:
     extra_args=$(envsubst < {{justfile_directory()}}/devcontainers/{{name}}/extra_args)
     podman build {{justfile_directory()}}/devcontainers/{{name}} -t $CONTAINER_ID
     echo "podman run -it --gpus=all --security-opt label=disable -d --replace -p {{port}}:22 -v zed-server:/root/.zed_server -v "{{invocation_directory()}}:/workspace" --name $CONTAINER_ID $CONTAINER_ID $extra_args"
-    podman run -it --gpus=all --security-opt label=disable -d --replace -p {{port}}:22 -v zed-server:/root/.zed_server -v "{{invocation_directory()}}:/workspace"  $extra_args --name $CONTAINER_ID $CONTAINER_ID
+    podman run -it --gpus=all --security-opt label=disable -d --replace -p {{port}}:22 -v vscodium-server_$CONTAINER_ID:/root/.vscodium-server -v zed-server:/root/.zed_server -v "{{invocation_directory()}}:/workspace"  $extra_args --name $CONTAINER_ID $CONTAINER_ID
     podman exec $CONTAINER_ID service ssh start
+
+podman-pull:
+    podman pull ollama/ollama:latest
+    podman image prune
