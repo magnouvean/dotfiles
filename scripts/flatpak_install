@@ -32,13 +32,14 @@ flatpaks_installed_str = subprocess.run(
 ).stdout.strip()
 flatpaks_installed = set(flatpaks_installed_str.split())
 
+subprocess.run(["flatpak", "--user", "remote-add", "--if-not-exists", "flathub", "https://dl.flathub.org/repo/flathub.flatpakrepo"])
 subprocess.run(["flatpak", "--user", "-y", "update"])
 
 for flatpak in flatpaks_installed - flatpaks_to_install:
     subprocess.run(["flatpak", "--user", "-y", "uninstall", flatpak])
 
 for flatpak in flatpaks_to_install - flatpaks_installed:
-    subprocess.run(["flatpak", "--user", "-y", "install", flatpak])
+    subprocess.run(["flatpak", "--user", "-y", "install", "flathub", flatpak])
 
 overrides = [
     ("com.valvesoftware.Steam", "--filesystem=/mnt/games")
