@@ -2,8 +2,8 @@ default:
     just -f {{justfile()}} --list
 
 # Should be run initially on first install, or when adding new system packages in general
-sync-full: packages sync # shell hostname flatpak vscode gnome dotfiles zed-extensions-remove services
-sync-full-nvidia: packages packages-nvidia sync # shell hostname flatpak vscode gnome dotfiles zed-extensions-remove services
+sync-full: packages packages-update sync # shell hostname flatpak vscode gnome dotfiles zed-extensions-remove services
+sync-full-nvidia: packages packages-nvidia packages-update sync # shell hostname flatpak vscode gnome dotfiles zed-extensions-remove services
 
 # Should be run most of the time
 sync: shell hostname flatpak vscode gnome dotfiles zed-extensions-remove services systemfiles
@@ -30,6 +30,8 @@ packages-nvidia:
         https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
     rpm-ostree install akmod-nvidia xorg-x11-drv-nvidia xorg-x11-drv-nvidia-cuda
+    rpm-ostree kargs --append=modprobe.blacklist=nova_core --append=modprobe.blacklist=nouveau --append=nvidia-drm.modeset=1
+    rpm-ostree initramfs --enable
 
     # Container toolkit
     curl -s -L https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo | \
@@ -40,6 +42,10 @@ packages-nvidia:
         nvidia-container-toolkit-base-${NVIDIA_CONTAINER_TOOLKIT_VERSION} \
         libnvidia-container-tools-${NVIDIA_CONTAINER_TOOLKIT_VERSION} \
         libnvidia-container1-${NVIDIA_CONTAINER_TOOLKIT_VERSION}
+
+[private]
+packages-update:
+    rpm-ostree update
 
 [private]
 shell:
@@ -131,7 +137,7 @@ devcontainer name port:
     podman build $CONTAINER_SOURCE -t $CONTAINER_ID
     podman run -it --gpus=all --security-opt label=disable -d --replace -p {{port}}:22 -v vscodium-server_$CONTAINER_ID:/root/.vscodium-server -v zed-server:/root/.zed_server -v "{{invocation_directory()}}:/workspace"  $extra_args --name $CONTAINER_ID $CONTAINER_ID
     podman exec $CONTAINER_ID service ssh start
-    rm $HOME/.ssh/known_hosts
+    if [ -f $HOME/.ssh/known_hosts ]; then rm $HOME/.ssh/known_hosts; fi
 
 podman-pull:
     podman pull ollama/ollama:latest
