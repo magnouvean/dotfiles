@@ -2,20 +2,24 @@
 
 import subprocess
 
+#
+# GSettings
+#
+
 to_reset = ["org.gnome.shell", "org.gnome.desktop.wm.keybindings"]
 
 for reset_dir in to_reset:
     subprocess.run(["gsettings", "reset-recursively", reset_dir])
 
 gsettings_keys = {
-    "org.gnome.desktop.background.picture-uri": "file:///usr/share/backgrounds/fedora-workstation/mermaid_dark.webp",
-    "org.gnome.desktop.background.picture-uri-dark": "file:///usr/share/backgrounds/fedora-workstation/mermaid_dark.webp",
+    "org.gnome.desktop.background.picture-uri": "file:///usr/share/backgrounds/bluefin/06-bluefin.xml",
+    "org.gnome.desktop.background.picture-uri-dark": "file:///usr/share/backgrounds/bluefin/06-bluefin.xml",
     "org.gnome.desktop.interface.clock-format": "24h",
     "org.gnome.desktop.interface.color-scheme": "prefer-dark",
     "org.gnome.desktop.interface.cursor-theme": "Adwaita",
     "org.gnome.desktop.interface.gtk-theme": "Adwaita",
     "org.gnome.desktop.interface.icon-theme": "Adwaita",
-    "org.gnome.shell.favorite-apps": "['org.gnome.Ptyxis.desktop', 'org.gnome.Nautilus.desktop', 'com.brave.Browser.desktop', 'com.vscodium.codium.desktop', 'dev.zed.Zed.desktop']",
+    "org.gnome.shell.favorite-apps": "['org.gnome.Ptyxis.desktop', 'org.gnome.Nautilus.desktop', 'com.brave.Browser.desktop', 'code.desktop']",
 }
 gsettings_keys.update(
     {
@@ -41,3 +45,23 @@ for key, value in gsettings_keys.items():
     subprocess.run(cmd)
 
 subprocess.run(["xdg-settings", "set", "default-web-browser", "com.brave.Browser.desktop"])
+
+
+#
+# Extensions
+#
+extensions_enabled = subprocess.run(["gnome-extensions", "list"], capture_output=True, text=True).stdout.strip().split("\n")
+for extension in extensions_enabled:
+    subprocess.run(["gnome-extensions", "disable", extension])
+
+extensions_to_enable = [
+    "appindicatorsupport@rgcjonas.gmail.com",
+    "blur-my-shell@aunetx",
+    "dash-to-dock@micxgx.gmail.com",
+    "gsconnect@andyholmes.github.io",
+    "search-light@icedman.github.com",
+]
+for extension in extensions_to_enable:
+    subprocess.run(["gnome-extensions", "enable", extension])
+
+subprocess.run(["dconf", "write", "/org/gnome/shell/extensions/dash-to-dock/hot-keys", "false"])

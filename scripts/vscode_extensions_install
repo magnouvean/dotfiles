@@ -4,20 +4,18 @@ import subprocess
 
 exts_to_install = set(
     [
-        "catppuccin.catppuccin-vsc",
-        "catppuccin.catppuccin-vsc-icons",
-        "jeanp413.open-remote-ssh",
+        "ms-vscode-remote.remote-containers",
         "streetsidesoftware.code-spell-checker",
         "vscodevim.vim",
     ]
 )
 exts_installed_str = subprocess.run(
-    ["flatpak", "run", "com.vscodium.codium", "--list-extensions"], capture_output=True, text=True
+    ["code", "--list-extensions"], capture_output=True, text=True
 ).stdout.strip()
 exts_installed = set(exts_installed_str.split())
 
 for ext in exts_installed - exts_to_install:
-    subprocess.run(["flatpak", "run", "com.vscodium.codium", "--uninstall-extension", ext])
+    subprocess.run(["code", "--uninstall-extension", ext])
 
 for ext in exts_to_install - exts_installed:
-    subprocess.run(["flatpak", "run", "com.vscodium.codium", "--install-extension", ext])
+    subprocess.run(["code", "--install-extension", ext])
