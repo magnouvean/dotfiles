@@ -57,7 +57,6 @@ for extension in extensions_enabled:
 extensions_to_enable = [
     "appindicatorsupport@rgcjonas.gmail.com",
     "blur-my-shell@aunetx",
-    "dash-to-dock@micxgx.gmail.com",
     "gsconnect@andyholmes.github.io",
     "search-light@icedman.github.com",
 ]

@@ -2,7 +2,7 @@ default:
     just -f {{justfile()}} --list
 
 # Should be run most of the time
-sync: hostname flatpak vscode gnome
+sync: hostname flatpak vscode gnome dotfiles
 
 [private]
 hostname-suffix := `hostnamectl chassis`
@@ -25,3 +25,9 @@ vscode:
 [private]
 gnome:
     {{justfile_directory()}}/scripts/gnome_settings
+
+[private]
+dotfiles:
+    #!/bin/sh
+    mkdir -p ~/.config/Code/User
+    cp {{justfile_directory()}}/files/vscode/settings.json ~/.config/Code/User/settings.json

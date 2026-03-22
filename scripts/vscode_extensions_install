@@ -7,6 +7,8 @@ exts_to_install = set(
         "ms-vscode-remote.remote-containers",
         "streetsidesoftware.code-spell-checker",
         "vscodevim.vim",
+        "github.github-vscode-theme",
+        "continue.continue"
     ]
 )
 exts_installed_str = subprocess.run(

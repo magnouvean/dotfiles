@@ -11,6 +11,7 @@ flatpaks_to_install = set(
         "com.github.tchx84.Flatseal",
         "com.ranfdev.DistroShelf",
         "com.valvesoftware.Steam",
+        "com.valvesoftware.SteamLink",
         "io.missioncenter.MissionCenter",
         "me.kozec.syncthingtk",
         "net.opentabletdriver.OpenTabletDriver",
