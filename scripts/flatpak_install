@@ -6,6 +6,7 @@ flatpaks_to_install = set(
         "ai.jan.Jan",
         "com.bitwarden.desktop",
         "com.brave.Browser",
+        "com.github.johnfactotum.Foliate",
         "com.github.neithern.g4music",
         "com.github.rafostar.Clapper",
         "com.github.tchx84.Flatseal",
@@ -40,7 +41,8 @@ for flatpak in flatpaks_to_install - flatpaks_installed:
     subprocess.run(["flatpak", "--user", "-y", "install", "flathub", flatpak])
 
 overrides = [
-    ("com.valvesoftware.Steam", "--filesystem=/mnt/games")
+    ("com.valvesoftware.Steam", "--filesystem=/mnt/games"),
+    ("com.brave.Browser", "--filesystem=home"),
 ]
 for override_package, override_arg in overrides:
     print("Overriding", override_package, override_arg)
